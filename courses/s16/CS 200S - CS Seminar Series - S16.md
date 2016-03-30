@@ -7,24 +7,24 @@ Topics:
 
 ----------------------------------------------------------------------
 ## Lecture Title
-Date: 4/8/2016
-Speaker: 
-Topics:
+Date: 4/8/2016  
+Speaker:   
+Topics:  
 
 ----------------------------------------------------------------------
 ## Lecture Title
-Date: 4//2016
-Speaker: 
-Topics:
+Date: 4//2016  
+Speaker:   
+Topics:   
 
 ----------------------------------------------------------------------
 ## Lecture Title
-Date: 4//2016
-Speaker: 
-Topics:
+Date: 4//2016   
+Speaker:   
+Topics:  
 
 ----------------------------------------------------------------------
 ## Lecture Title
-Date: 4//2016
-Speaker: 
-Topics:
+Date: 4//2016  
+Speaker:   
+Topics:  

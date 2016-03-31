@@ -19,16 +19,17 @@ Structure:
 ----------------------------------------------------------------------
 ## Lecture 2
 Date: 3/30/2016  
-Topics: History, Hardware Components
+Topics: History, Hardware Components (Processors, Storage, Communication, Peripherals)  
+Reading: [Trends in Embedded Systems](Reading http://www.ics.uci.edu/~givargis/courses/cs245/papers/MartinZurawski.pdf)
 
 ### Some History
 1947 - Shockley, Brattain and Bardeen invent transistor (Bell Labs)  
 1961 - First commercial integrated circuit (Fairchild/Texas Instruments)  
-1963 - CMOS (Complementary metal oxide semi conductor) solves problem 
+1963 - CMOS (Complementary metal oxide semi conductor) solves problem
 	   of excessive power consumption (still modern)    
 
-Circuits now use most power at the moment of switching from 0 to 1. 
-(Slower clock speeds reduce power). 
+Circuits now use most power at the moment of switching from 0 to 1.
+(Slower clock speeds reduce power).
 
 ###### Moore's Law  
 1965 - Moore's Law : number of transistors on a chip will double every
@@ -39,13 +40,15 @@ Transistors have increased exponentially, but clock speed and power consumption 
 becomes too difficult after a point).    
 
 ###### Definition (Embedded System)
-Everything except laptops / desktops / servers that have electricity running through and perform something intelligent. Usually embedded hardware / software forms part of a larger system and are concealed 
+Everything except laptops / desktops / servers that have electricity running through and perform something intelligent. Usually embedded hardware / software forms part of a larger system and are concealed
 
 ### Embedded System Hardware
 
 ###### Processors
-Processor: something that computes. (Has a data-path and a controller).  
+Processor: something that computes. (Has a data-path and a controller).
+
 *General purpose:* variety of tasks, flexible, slow / power hungry. Controller is programmable (control logic in memory --> fetch / decode overhead). Has a highly general data-path with a normal bit-width (32 or 64), complete set of arithmetic and logic units, as well as a large set of registers.  
+
 *Single purpose:* one computation task, inflexible, fast / power efficient. The controller is hardwired, so there is no program memory or cache, and no fetch/decode overhead. The data-path is highly tuned and has a custom bit width, custom arithmetic / logic units, and a custom set of registers. (Common for embedded systems).    
 
 ###### Storage
@@ -61,33 +64,30 @@ Bus: something that transfers bits. Can be wires air or fiber. Also includes int
 
 *Parallel Communication*: multiple wires for data transfer (multiple bits sent at a time), and one or more additional wires for control. Better for short distance communication (within nodes). Higher cost.
 
-*Wireless Communication*: Infrared (IR - cheap, limited range) or radio frequency (RF - bigger range, transmitter power determines range). 
+*Wireless Communication*: Infrared (IR - cheap, limited range) or radio frequency (RF - bigger range, transmitter power determines range).
 
 ###### Peripherals
 (Specific computation task).
 
-**Timers/Counters**: Timers measure time intervals, counters count pules on a general input signal ratehr than a clock.
-
-### Embedded System Software
-
-
+*Timers/Counters*: Timers measure time intervals, counters count pulses on a general input signal rather than a clock.
 
 
 ----------------------------------------------------------------------
 ## Lecture 3
 Date: 4/4/2016  
-Topics: 
+Topics: Software
+
+### Embedded System Software
+
+###### Real-time systems
+
 
 ----------------------------------------------------------------------
 ## Lecture 4
 Date: 4/6/2016  
-Topics: 
+Topics:
 
 ----------------------------------------------------------------------
 ## Lecture 5
 Date: 4/8/2016  
-Topics: 
-
-
-
-
+Topics:

@@ -32,7 +32,7 @@ Example:
 read(x);               // x is "killed".
 if (x > 0) { y = 1; }  
 else { y = 2; S(); }   // S does not modify y.
-z = y;			       // this is a "copy".
+z = y;                 // this is a "copy".
 ```
 We can conclude that `z in {1,2}`.
 
@@ -43,28 +43,49 @@ We will use this language throughout the course.
 * While statements
 
 Quotes:
-
-"It takes a year to learn C++, half a year to learn Java, and a year 
-of learning Python to ruin you for life."
-
-"You can program with recursion guilt-free!"
+* "It takes a year to learn C++, half a year to learn Java, and a year of learning Python to ruin you for life."
+* "You can program with recursion guilt-free!"
 
 ----------------------------------------------------------------------
 ## Lecture 2
-Date: 4//2016    
-Topics: 
+Date: 3/31/2016    
+Topics: Homework 1 (Flex and Bison)
+
+### Homework notes
+A *lexeme* is a string of characters considered atomic. A *token* is an abstraction to represent a set of lexemes. (We map strings to integer tokens because string comparison is slow).
+
+Files:
+```
+tiny-ada.l - lexemes to tokens (flex)
+tiny-ada.y - shows grammar (bison).
+tiny-ada.h - tokens created by bison
+exprs.h    - Abstract syntax
+```
+
+Syntax for describing grammar in yacc:
+```
+$1, $2 are like the parameters and $$ is the return value.
+Curly braces surround action (in C++) to perform.
+| is or.
+yy is a prefix that indicates flex or bison methods or data.
+```
+
+A *union* is an overlay of one or more objects. (A single memory section that can be interpreted as multiple types).
+
+
+
 
 ----------------------------------------------------------------------
 ## Lecture 3
 Date: 4//2016  
-Topics: 
+Topics:
 
 ----------------------------------------------------------------------
 ## Lecture 4
 Date: 4//2016  
-Topics: 
+Topics:
 
 ----------------------------------------------------------------------
 ## Lecture 5
 Date: 4//2016  
-Topics: 
+Topics:

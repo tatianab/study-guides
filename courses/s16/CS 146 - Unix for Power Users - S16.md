@@ -7,7 +7,11 @@ diff
 file
 find
 ftp
-grep
+
+grep - global regular expresson print
+grep <string> <file1> .. <filen>
+Find all lines in the given files that contain the given string.
+
 make
 man (manual) - man <command>
 nslookup
@@ -90,14 +94,65 @@ A file system is contained on a disk. File systems are mounted onto existing fil
 ###### Hard links and Symbolic links
 Dir files contain (filename, i-number) pairs. Each entry is called a link, and each file can have more than one link. Regular links (*hard links*) are not allowed to cross file systems. All hard links have an equally strong hold on their files (so a file can't be deleted with outstanding hard links). A *symbolic link* (like a shortcut) is just a string of text (pathname) of the file being linked to, and these can cross file systems. Symbolic links can point to deleted files.
 
+###### File descriptors
+A file descriptor is an integer that identifies a file.
+
 ----------------------------------------------------------------------
 ## Section 2
-Date: 3/31/2016 and    
-Topics: UNIX Shell, Unix Processes  
-
-### UNIX Shell
+Date: 4/5/2016 and    
+Topics: Unix Processes  
 
 ### UNIX Processes
+A process is an executing program.
+
+###### Fork
+A `fork()` system call duplicates a running program. The duplicate is called the child, and the original is called the parent. The only difference is the fork return value. (The child returns 0 from the `fork()` call, the parent returns a non-zero value, which is the process ID of the child).  
+
+###### Exec
+An `exec()` system call replaces the program being run by a process by a different one (starts the new program from the beginning). This is the *only* way (`fork` then `exec`) that a new program is started in Unix.  
+
+The `exec` system call has a parameter `char* argv` that is used to pass command line arguments to the executed commands. (`argv[0]` holds the command itself).  
+There is also the argument `char* envp` (environment variables). Use the `export` command to add a local shell variable to the environment.
+
+###### Processes and File descriptors
+File descriptors are maintained across exec calls and fork calls.  
+
+`getpid()` - get my process ID   
+`getppid()` - get my parent's process ID  
+
+###### Initializing UNIX
+1. Run `/etc/init`
+2. Fork and exec `/etc/getty`
+3. Password stuff
+4. Exec `/bin/bash`
+
+###### Standard streams
+Descriptor | Name | Purpose
+--- | --- | --- |
+0 | Standard Input  | Read input
+1 | Standard Output | Write results
+2 | Standard Error  | Report errors
+
+###### How bash runs commands
+Run a command: The shell forks then execs the typed command.
+
+###### I/O Redirection
+`<` Receive standard input from given file  
+`>` Redirect standard output to given file  
+This happens after the fork but before the exec.
+
+###### Pipes
+Example: `<x> | <y>` sends output of `<x>` to input of `<y>`.  
+The first program still reads from standard input, and the last program writes to standard output.  
+Can be (almost) arbitrarily long.  
+Commands in a pipeline are run concurrently.  
+
+### Bourne Shell
+
+###### Redirection
+`n > file`: redirect output from fd n to file (default n=1 stdout).  
+`n >> file`: append output from fd n to file (default n=1 stdout).  
+`n < file`: redirect input (default n=0 stdin).  
 
 ----------------------------------------------------------------------
 ## Section 3

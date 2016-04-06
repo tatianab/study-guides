@@ -147,7 +147,101 @@ Topics: Software Components
 
 ### Embedded System Software
 
-###### Real-time systems
+#### Real-time systems
+Real time systems must produce correct results in real time (i.e., meet deadlines).
+
+###### Deadline types
+*Hard realtime* system must meet all deadlines. A missed deadline is a system flaw. Vigorously tested (sometimes formally verified) for worst case conditions.
+
+*Firm realtime* system designed to meet all deadlines but some (quantifiable) number of missed deadlines is OK. There is no benefit in continuing to compute if a deadline is missed. Hardware / software designed for average case scenario.
+
+*Soft realtime* (most systems). Designed to meet as many deadlines as possible. Still compute after deadline is missed. Hardware / software designed for average case scenario.
+
+###### Embedded Operating Systems
+Needs: means for dynamic task creation (create, join, cancel), means for task synchronization and communication. (Posix threads are a common solution to synchronization problems).  
+
+Hardest task is *scheduling*: Usually we have *n* things which are each easy to do, but we need to decide in what order to do these tasks.  
+
+*Parallel* (two processors) v. *Concurrent* (two tasks being worked on at the same time).
+
+Example: *Consumer-Producer*. Two tasks running concurrently and access the same memory `int buf[N]` (organized as a circular queue with head `h`, tail `t` and size `s`). Consumer reads from buffer and producer writes to buffer.
+```
+Consumer() {
+	for(;;) {
+		if (0 < s) { // C programming note: start with a constant
+			x = buf[t];
+			t = (t+1) % N;
+			s--;		   // Problem!
+		}
+	}
+}
+
+Producer() {
+	for (;;) {
+		if (N > s) {
+			buf[h] = rand();
+			h = (h+1) % N;
+			s++;		   // Problem!
+		}
+	}
+}
+```
+Problem: the increment and decrement can overwrite each other because they can both access the `s` at the same time.  
+How to fix? We could use a *lock* which gives exclusive access to a memory cell.
+But this isn't enough. We also need *condition variables*, which allow us to call `wait(cond_var)` that freezes if  `cond_var` is 0. The `signal(cond_var)` function increments the `cond_var`.
+```
+(Fixed)
+Consumer() {
+	int x;
+	for(;;) {
+		wait(item_avail);
+		lock(l);
+		x = buf[t];
+		t = (t+1) % N;
+		unlock(l);
+		signal(space_avail);
+	}
+}
+Producer() {
+	for(;;) {
+		wait(space_avail);
+		lock(l);
+		buf[h] = rand();
+		h = (h+1) % N;
+		unlock(l);
+		signal(item_avail);
+	}
+}
+```
+
+###### Fixed Point Arithmetic
+Use integer math to emulate floating point numbers and operations. (Because normal floating point arithmetic is constantly changing where the decimal point is).  
+Burden is on programmer in fixed point arithmetic. (This can be done with only integers and no support for floating points).  
+Determine range and precision (*m.n*), define `+, -, *, /`, analyze for overflow. Use tables for common functions (sine, cosine etc).  
+Benefits? Adjust data type size, speed, control over precision.
+
+#### Digital Signal Processing  
+
+###### Sensors and Actuators
+Sensors transform physical stimulus into electrical current. Actuators transform commands into physical stimulus.
+
+###### Analog / Digital Domain Conversion
+*Sampling rate* (how often is the signal converted)  
+Highest frequency observed vs. highest frequency I care about. We need to sample at least twice the rate of the highest frequency signal present.
+
+*Quantization* (how many bits are used to represent a sample)  
+Dynamic range: low-high (we have the range-precision tradeoff again). Resolution (difference between two consecutive values) should be smaller than the ability of the audience to distinguish between two values.  (Examples: HTML rgb colors, human ear limit is 96dB).  
+Problems: underloading (underusing bits), clipping (signals outside of range), AC clipping.
+
+*Aliasing* (erroneous signals not present in analog domain)  
+Fix: sample at a higher rate, use anti-aliasing filters.  
+Example: bicycle wheel that appears to be going backwards.
+
+###### Signal Processing
+Digital signal `S0, S1, S2, ..., Sn-1`. Can do all kinds of transformations (transpose, amplify, compose, filter, compress, archive), or post-process (spectral analysis).  
+
+Example: create echo by composing the current sound with a previous sound (each multiplied to make the current one louder).  
+Example: compress time.
 
 
 ----------------------------------------------------------------------

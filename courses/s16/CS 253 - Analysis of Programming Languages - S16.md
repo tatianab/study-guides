@@ -91,7 +91,7 @@ A *union* is an overlay of one or more objects. (A single memory section that ca
 
 ----------------------------------------------------------------------
 ## Lecture 3
-Date: 4/5/2016  
+Date: 4/5/2016 and 4/7/2016  
 Topics: Data Flow Analysis
 
 ### Data Flow Analysis
@@ -104,6 +104,7 @@ Improvement must be worth the implementation effort.
 
 ###### Optimization Types
 *Common subexpression elimination*  
+Avoid re-computation of the same expression.
 ```
 T1 = 4 * i;
 T2 = 4 * i;
@@ -150,18 +151,89 @@ put(i);
 *Interprocedural Data Flow* - entire program. (many compilers do not do this -- too many libraries).  
 
 ###### Basic Blocks and Flow Graphs
-A *definition* of a a variable is an asssignment to
-*Use*  
-*Live* (a point is in between two instructions)
-*Basic block*
-*Control flow graph*
+A *definition* of a variable is an assignment to that variable.  
+A *use* is a reference to the value in a variable.    
+A variable is *live* at a point if it is used after that point (a point is in between two instructions).  
+A variable is *killed* when it is re-defined.
+
+*Basic block* (unit of control flow) sequence of instructions. Enter at the top and compute each instruction then leave at the bottom.   
+*Control flow graph* graph with nodes (basic blocks) and directed edges show all possible flows between nodes (e.g., loops, if, function calls).
+
+###### Local Data Flow
+Optimize within a basic block.  
+Analysis: reaching definition (find definition via backward search), live variable analysis (forward search for use of a variable).  
+Optimizations: constant and copy propagation, constant folding, eliminating useless assignments.  
+(Note that optimizations can "trickle down").
+
+###### Global Data Flow
+*Available expression analysis* (avoid recomputation of values).  
+*Reaching definition analysis* (determine what assignments can reach a given use of a value).  
+*Live variable analysis* determine which variables may be used after a point. This is useful for eliminating useless assignments.  
+
 
 ----------------------------------------------------------------------
 ## Lecture 4
-Date: 4//2016  
-Topics:
+Date: 4/19/2016  
+Topics: HW2, Quiz Topics  
+
+#### Homework 2
+One forward pass (to optimize)  
+One backward pass (to remove instructions that do not define live variables).  
+(Checking whether you define a live variable is a function of self).  
+Optimize operand. - find reaching def (search backwards for definition).
+
+#### Quiz Topics
+For the 3-addr program below, identify basic blocks and add directed control flow edges to complete a CFG.
+Construct a DAG repr for the largest basic block in the program above**  
+Give the set of definitions that reach the use of X in "Y := X + Z".  
+What optimizations might we do with line 8 based on these reaching defs?  
+
+### Data Types
+
+###### Pointer / Reference Types
+Segmentation fault is a pointer to something that is not allowed (i.e., not the stack or heap).
+```
+Code
+Initialized Static Data
+Unitialized Static Data
+(Virtual Registers?)
+Heap
+---
+Stack
+```
+
+###### Semantic Analysis of Programs
+Static consistency checks - at compile time. Type checks, flow-of-control checks, uniqueness checks, name-related checks.
+
+###### Type Expressions
+Type expressions are recursively defined.
+
+###### Quiz 3
+Draw a type DAG representing the following name equivalent type definitions from Tiny-Ada. Assign unique addresses to each node (1000, 2000, etc) and give
+Why do we use this DAG representation? (to avoid string comparison --> efficient)
+Example from Tiny-Ada that is difficult to handle with DAG representations?
+
+```
+type integer;
+type boolean;
+type person;
+type person_ptr is access person;
+type person is
+  record
+    age: integer;
+    is_21: boolean;
+    next: person_ptr;
+  end record;
+type people is array[0..10] of person;
+```
+```
+integer: 1000 basic type
+boolean: 2000 basic_type
+person_ptr: 3000 POINTER (4000)
+person: 4000 RECORD ((age X 1000) X (is_21 X 2000) X (next X 3000))
+people: 5000 ARRAY (1000, 4000)
+```
 
 ----------------------------------------------------------------------
-## Lecture 5
-Date: 4//2016  
-Topics:
+## Translation
+Date: 5/3/2016  

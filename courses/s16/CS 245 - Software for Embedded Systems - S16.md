@@ -2,15 +2,14 @@ CS 245 - Software for Embedded Systems - S16
 ======================================================================
 ## Readings
 
-### [Trends in Embedded Systems](http://www.ics.uci.edu/~givargis/courses/cs245/papers/MartinZurawski.pdf)
+ [Trends in Embedded Systems](http://www.ics.uci.edu/~givargis/courses/cs245/papers/MartinZurawski.pdf)
 
-###### Research problem
-###### Claimed contribution
-###### Methodology / argument
-###### Conclusions
+[Notes on State Machines](http://www.ics.uci.edu/~givargis/courses/cs245/papers/DavidRWrightNotesOnStateMachines.pdf)
+
+ [Ptolemy Project](http://www.ics.uci.edu/~givargis/courses/cs245/papers/PtolemyProject.pdf)
 
 ----------------------------------------------------------------------
-## Lecture 1
+## Introduction
 Date: 3/28/2016  
 Topics: Administration, Final Paper, Some History
 
@@ -25,6 +24,14 @@ Structure:
 * Meat         - summaries of existing literature.
 * Conclusion   - your opinion / analysis / insight.
 (Add more to this section).
+
+What is the problem, why is it important? What has been done (state of the art), what needs to be done? What are your opinions?
+
+Groups of two are OK, but paper must be beefier.  
+
+Read between 4 and 8 papers. (Could take 3 or 4 readings to understand). Look at papers that brought a topic to light - informative about the problem and why it is important.
+
+Avoid just grabbing papers that cite others. Give a sense of multiple viewpoints.  
 
 ### Some History
 1947 - Shockley, Brattain and Bardeen invent transistor (Bell Labs)  
@@ -47,9 +54,10 @@ becomes too difficult after a point).
 Everything except laptops / desktops / servers that have electricity running through and perform something intelligent. Usually embedded hardware / software forms part of a larger system and are concealed
 
 ----------------------------------------------------------------------
-## Lecture 2 / 3
+## Embedded System Review
+[Slides](http://www.ics.uci.edu/~givargis/courses/cs245/lectures/lecture1.pdf)  
 Date: 3/30/2016 and 4/4/2016    
-Topics: Hardware Components (Processors, Storage, Communication, Peripherals)  
+Topics: Hardware Components (Processors, Storage, Communication, Peripherals), Software Components  
 
 ### Embedded System Hardware
 
@@ -142,7 +150,8 @@ Physical world is analog. Computer world is digital. Conversion: given a value i
 
 ----------------------------------------------------------------------
 ## Lecture 4
-Date: 4/6/2016  
+[Slides]()  
+Date: 4/6/2016 and 4/11/2016  
 Topics: Software Components
 
 ### Embedded System Software
@@ -238,18 +247,299 @@ Fix: sample at a higher rate, use anti-aliasing filters.
 Example: bicycle wheel that appears to be going backwards.
 
 ###### Signal Processing
+Computation on signal after it has been collected.
+
 Digital signal `S0, S1, S2, ..., Sn-1`. Can do all kinds of transformations (transpose, amplify, compose, filter, compress, archive), or post-process (spectral analysis).  
 
-Example: create echo by composing the current sound with a previous sound (each multiplied to make the current one louder).  
-Example: compress time.
+Examples: create echo by composing the current sound with a previous sound (each multiplied to make the current one louder), compress time (chipmunk), filter by averaging every pair of signals to remove noise.
+
+A *fourier transform* (FT) converts a continuous signal into a sum of sine and cosine functions.
+
+----------------------------------------------------------------------
+## Programming Embedded Systems
+[Slides](http://www.ics.uci.edu/~givargis/courses/cs245/lectures/lecture2.pdf)  
+Date: 4/18/2016  
+Topics: Finite State Machines
+
+Chapters 3,4,6,7 (12, 13 maybe).  
+
+### Finite State Machines
+Be able to convert FSM to C programs (or Java) or whatever.  
+Focus on semantics of state machines for the exam.  
+
+###### Moore vs. Mealy
+
+###### Global variables
+Two tasks should not be allowed to naively write to the shared variable.  
+Give everyone a "virtual resource" and introduce a "tie-breaker" that enforces conflict resolution for the real resource.  
+
+----------------------------------------------------------------------
+## Embedded Design Domains
+[Slides](http://www.ics.uci.edu/~givargis/courses/cs245/lectures/lecture3.pdf)  
+Date: 4/18/2016 and 4/20/2016  
+Topics:
+
+###### Hybrid Embedded Systems
+Computation systems whose behavior is tightly integrated with the physical world. Physical states are continuous, and computation states are discrete. (Passage of time during computation affects the state of the physical world.)  
+
+###### Sensor Networks
+Motivation: tiny ad-hoc networks of sensors on a battlefield. (US gov).  
+Properties: small, self-organizing, energy efficient, distributed.  
+Problem: how I do I power it?  
+
+###### Multimedia
+Examples: Virtual reality, blue ray players.  
+Problems: Quality of service, lots of data!
+
+###### Consumer Electronics
+Home: add computation and networking to yesterday's appliances.  
+Office: integration, electronic paper (e.g., filing, printing).  
+Total automation: Fantasy of home/office automation and integration.  
+
+###### Networking Equipment
+Stitching LANs (merge networks): bridge or router.  
+Ports: switch or hub (transmit to all).
+Common properties: large volume of highly structured data, minimal transformation.  
+
+###### Medical Instruments
+Diagnosis - data collection, analysis, sensing / actuation.  
+Examples: radiation therapy, artificial hearts.  
+Must be extremely reliable.  
+
+###### Distributed and Grid Computing
+Coordinated resource sharing.  
+Grid is static, reliable, and has infinite resources (nearly).  
+Users have limited resources.  
+Middleware mitigates the resource sharing and coordination efforts.  
+Example: phones and data.  
+Earliest form: search engines (ask a remote server to find something for you).  
+
+###### MEMS (Micro Electro-Mechanical Systems)
+Small electro-mechanical devices.  
+
+*MEMS Design Concerns*
+Need to deal with: forces related to volume (weight and inertia) decrease in significance, but forces related to surface area (friction, surface tension).
+
+*Inside MEMS Devices*
+Mechanical: motors, gears, pivots, linkages.  
+Electronic: transistors, resistors, capacitors, inductors.  
+Internals are rugged, fast, use little power, small volume, cheap.  
+
+###### Nanotechnology (even smaller than MEMS!)
+Molecular scale - molecules need to be glued together one at a time. (Can't just chisel something out).  
+Quantum physics becomes important - it changes properties of materials. Laws we know may or may not apply.  
+Nanotechnology today is passive (e.g. synthetic material): most is concerned with controlling material properties.  
+
+----------------------------------------------------------------------
+## Models, Languages & Tools
+[Slides](http://www.ics.uci.edu/~givargis/courses/cs245/lectures/lecture4.pdf)  
+Date: 4//2016  
+Topics:
+
+How do we build embedded systems?  
+A *model* refers to a conceptual notion of how to capture system behavior. (A set of object with composition rules and execution semantics).  
+*Languages* formally describe models of computation (with specific syntax and semantics).  
+*Tools* transform a model captured in one language to a model captured in another language (e.g. compilers).  
+
+###### Models of Computation
+*Sequential model of computation* - computation as a set of sequential instructions.    
+*Concurrent model of computation* - multiple threads of execution with synchronization and communication.  
+*Object-oriented model of computation* - computation is a set of objects with polymorphism (a derived class can modify the behavior of its base class).  
+*FSM (Finite State Machine)* - set of states and transitions.  
+*DFG (Directed Flow Graph?)* - set of computation nodes and flow paths.  
+*Petri Net* - set of places, transitions, edges and tokens. Tokens indicate whether or not a transition can fire. (Good for modelling and simulation of physical or social systems).  
+*Kahn Process Network* - set of concurrent processes sharing data using unbounded buffers. (Buffers are used to pick up the slack of certain processes being faster than others). Used to determine what size to assign to real buffers in the system.    
+*Communicating Sequential Processes (CSP)* - set of concurrent processes with no shared memory, but send/receive messages OK.  
+
+###### Meta Models
+*Discrete Events (DE)* - events occur at discrete points on a time continuum, events trigger computations, computations trigger more events. (This is necessary for digital computers - VHDL and VERILOG are the most common hardware description languages).  
+*Continuous Time (CT)* - differential equations model continuous I/O response as a function of continuous time. (Note that DE can't perfectly capture continuous behavior - must lose some information).    
+*Synchronous Reactive* - like DE, but with event timings snapped to a regular clock.  
+*Publish and Subscribe* - (Higher level model) sending applications (publishers) publish messages without explicitly specifying recipients. Receiving applications (subscribers) receive only those messages that the subscriber has registered an interest in. Loosely coupled networked systems.  
+*Map-reduce* - break a problem into a "map" phase where a bunch of processors do a little work on a chunk of data. "Reduce" phase is bringing all the data back together.  
+
+###### VHDL (Discrete Events Model Example)
+Hardware description language.  
+We have processes (which can die and come back to life). It responds to sensitivity lists.
+In the example below, if clock changes then the process begins.    
+```
+process(clock)
+begin
+(1)	clock <= not clock after 100ns;
+end
+process(clock)
+begin
+	count <= count + 1 after 50ns;
+end
+```
+(1) There is a vicious circle because changing clock restarts the process.
+If we add `after 100ns` we can make a proper timing diagram which is a square wave.
+
+Software == (Digital) Hardware! Any digital circuit can be simulated by software, and vice versa. This is because both are based on discrete event simulation.    
+
+###### Tools
+
+*Compilers* - a native compiler outputs native machine language for the machine on which the compiler is running. A cross compiler outputs code that runs on a different machine. A parallelizing compiler (attempts to) discover opportunities for parallelism in a program (for example, a loop where the result of the previous loop is not needed). A VLIW (very long instruction word), it is possible to do multiple instructions in parallel. Special compilers translate models (FSM, Petri Net) to, for example, C code. Synthesis (translate a high-level language into a circuit - e.g. RTL).
+
+*IDEs*  
+
+*Simulators* - need controlability (stop, take steps forward and backward), observability (stop and watch variables). Functional (shows how the thing would behave without precise timing), Cycle-accurate (shows precise timing), Non-functional (e.g., power simulator or cache simulator where behavior isn't important), Bus-functional (precise use of bus communication).   
+
+*Interpreters* - like simulators. Example: Virtual Machine (mimic another processor, re-popularized by JVM), Hypervisor (manages virtual machines).  
+
+*Emulators* - FPGA (field programmable gate array).  
+
+*Debuggers* - tools that allow you to run a program with controlability and observability.  
+
+*Visual programming* - graphical programming.  
+
+#### Design Flow
+
+###### Research
+*Verification* - Did we build the thing right? Simulation, formal verification (answer questions without simulation).  
+*Formal Verification* - Equivalence checking (reduce to canonical form, check for equality -> not always possible), theorem proving (treat code as a black box -> two programs are equivalent if their I/O response is the same), model checking (is a property satisfied by a model?).
+
+*Validation* - Did we build the right thing?  
+
+*Some tools for Simulation* - `gdb` (debugger - set breakpoints, step, print values), `gcov` (what % of your code was executed?), `gprof` (where are the "hot" areas of the code - which instructions are executed the most often), `valgrind` (memory leak checking). All of these require running the code (simulation).
+
+###### Design
+
+###### Document
+Write code and explain it.
+
+----------------------------------------------------------------------
+## Midterm Review
+Date: 5/2/2016  
+
+Moore's Law - Transistor capacity on a chip doubles every 18 months. (precise).  
+Working definition of embedded systems: Everything except laptops / desktops / servers that have electricity running through and perform something intelligent. Usually embedded hardware / software forms part of a larger system and are concealed.
+
+Processors - Difference between General Purpose (fixed width, fixed number of registers, fetches program from memory) vs. Single Purpose processor (custom data path, controller hard coded, no program memory).  
+
+Storage - storage permanence (how long bits are held after write), writeability: manner/speed in which program memory can be written to.
+
+Communication - parallel vs. serial (one bit at a time -> easier to build high speed because of variation in arrival times in parallel).
+
+Pulse Width Modulation (PWM) - deliver a range of energy from a digital system to analog. Send out 0's and 1's, with T_high and T_low. Period = T_high + T_low. Duty cycle = T_high / Period.
+
+Real-time - in addition to being correct, result must come in a timely fashion. Hard (no deadline misses, miss -> failure), firm (some misses, miss -> do not finish task), soft (some misses, miss -> continue to finish).
+
+DSP (Digital Signal Processing) - A -> D and D -> A. Sampling (rate of conversion, should be >2 times the highest frequency) and quantization (number of bits per sample). Dynamic range (range of samples we can represent).
+
+Control - open (no feedback), closed (feedback, three strategies: proportional (to the current error), integral (sum of all errors), derivative (change in error)).
+
+State Machine - model with concept of states and transitions. Does things in the right sequence, but no notion of timing. Need to know how to read and understand state machine, but also translate from C to a state machine diagram.  
+
+Synchronous State Machine - add a period. Transitions take place at a given time.
+
+Concurrent Synchronous State Machine - two or more state machines with possibly different periods working concurrently.
+
+Definition of Cyber-Physical System (also known as Hybrid System) - systems that interact (via sensing and actuation) with the physical world. Physical (environment) + Cyber (electronic, computation), control in between.
+
+Distributed and Grid Computing - high-end/grid/cloud ("infinite" resources), mobile devices (limited resources). Make the right thing happen in each part.
+
+Sensor Networks - really small devices, lots of them, limited, power is an issue, collective problem solving gives them power.  
+
+MEMs (micro-meter, tiny systems with recognizable components, different well-known properties are relevant, properties don't change) vs. Nanosystems (nano-meter level, properties actually *change*).  
+
+Models of Computation - objects, rules for composing objects (how to create a valid model), execution semantics (how do we "run" the model).  
+
+Language - capture a model of computation. Can be textual (e.g. C) or pictorial (e.g. a state machine). They are both equally powerful, because they are the same.  
+
+Tools - transform one model into another (e.g. compiler).
+
+Petri Net - question: given a Petri Net, fill in a timeline with how many tokens are associated with each node. (find Petri Net simulation online).
+
+Compiler - cross (compiler for a different machine) vs native (compiler for the machine where the compiler is running).
+
+Verification (is this a correct toaster?) vs. validation (was I supposed to build a toaster?).
+
+Verification - testing through simulation (slow!) OR formal verification (limited).
+
+----------------------------------------------------------------------
+## Optimizing Compilers
+[Slides](http://www.ics.uci.edu/~givargis/courses/cs245/lectures/lecture5.pdf)  
+Date: 5/9/2016
+
+###### Pre-processing (Example: C/C++)
+Expands and substitutes `#xxx` directives.  
+Lacks syntax and semantics knowledge of underlying C.  
+Criticism: macros have no notion of type -> can cause unexpected results.    
+
+*Macros* - `#define`  
+Alternatives: inline functions (performance) - keyword `inline`, templates (extensible).
+
+*Conditional compilation* - `#if - #then - #else`  
+Alternative: dead code elimination.  
+
+###### Lexical Analyzer
+Convert sequence of characters into a sequence of tokens.  
+Lexical rules are captured by regular expressions: FSM recognizes tokens, longest match is accepted, tokens deliminated by white-space.  
+There are tools (lex, flex, etc) that automatically generate lexers.  
+
+###### Semantic Analyzer (Parser)
+Match a sequence of tokens against a formal grammar of the language. (Call the backend on a match, or emit an error if no match).  
+The language is captured by a context-free grammar, which typically recognizes a superset of the language.  
+Top-down / bottom-up parsers.
+
+Note: parsers cannot find all errors (e.g., undefined variable).  
+
+###### Code Generation
+Lexer/Parser yield an internal representation: abstract syntax tree / parse tree.
+Multiple passes: convert parse tree into a linear sequence of instructions (abstract 3-address code). Final passes generate executable code from abstract 3-address code.  
+
+###### Code Optimization
+Optimization modifies code to make it more efficient (e.g. speed, space or power), but it must retain program behavior.  
+Kinds of optimization: algorithmic optimization (very tough & rare -> understand what you are doing and use the best algorithm), general (dataflow and loop) optimization -> make the algorithm run with fewest instructions needed, machine dependent/independent optimization.  
+No universal optimization objective.  
+
+Types of Optimization:
+*Alias and pointer analysis* - a pointer may point to any memory location. Restricting the scope of reference helps with subsequent optimizations.  
+*Dataflow Optimization* - common subexpression elimination, constant folding.  
+*Loop Optimizations* - induction variable elimination -> all induction variables in a loop can be merged into one, loop fission, loop fusion, loop splitting (for long loop bodies -> helps program cache performance), loop inversion (while to do-while), loop-invariant code motion (move things out of the loop if they don't change), loop-nest optimization (most benefit in deeper nested statements), loop unrolling (more code, fewer branches), loop unswitching (hoist conditional statements out of loop body), software pipelining (split loop body into several sections), loop parallelization (loop body done in parallel).
+
+Example (induction variable elimination):
+```
+while (i < 10) {
+  j = 3 * i + 1;
+  a[j] = a[j] - 2;
+  i += 2;
+}
+
+// Optimized
+t = 3 * i + 1;
+while (t < 31) {
+  // j = t;
+  a[t] = a[t] - 2;
+  // i += 2;
+  t += 6;
+}
+```
+
+*Machine dependent optimizations* - register allocation, instruction selection and scheduling.  
+
+*General Optimizations* - dead code elimination, code factoring (opposite of code inlining - recognize repeated statements), function versioning (create simpler versin of function).
+
+*Advanced optimizations* task partitioning, static evaluation assisted optiizations, trace assisted optimization.
+
+
 
 
 ----------------------------------------------------------------------
-## Lecture 4
-Date: 4/6/2016  
+## Real-time Operating Systems
+[Slides](http://www.ics.uci.edu/~givargis/courses/cs245/lectures/lecture6.pdf)  
+Date: //2016  
 Topics:
 
 ----------------------------------------------------------------------
-## Lecture 5
-Date: 4/8/2016  
+## Reconfigurable Computing
+[Slides](http://www.ics.uci.edu/~givargis/courses/cs245/lectures/lecture7.pdf)  
+Date: //2016  
+Topics:
+
+----------------------------------------------------------------------
+## Embedded Software Reliability
+[Slides](http://www.ics.uci.edu/~givargis/courses/cs245/lectures/lecture8.pdf)  
+Date: //2016  
 Topics:

@@ -1,0 +1,4 @@
+*.aux
+*.blg
+courses/s16/cs245-pufs-survey/paper/main.log
+*.gz

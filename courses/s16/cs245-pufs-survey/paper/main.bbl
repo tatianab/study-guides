@@ -1,0 +1,16 @@
+\begin{thebibliography}{1}
+
+\bibitem{DBLP:conf/ccs/GassendCDD02}
+Blaise Gassend, Dwaine~E. Clarke, Marten van Dijk, and Srinivas Devadas.
+\newblock Silicon physical random functions.
+\newblock In {\em {ACM} Conference on Computer and Communications Security},
+  pages 148--160. {ACM}, 2002.
+
+\bibitem{DBLP:series/isc/MaesV10}
+Roel Maes and Ingrid Verbauwhede.
+\newblock Physically unclonable functions: {A} study on the state of the art
+  and future research directions.
+\newblock In {\em Towards Hardware-Intrinsic Security}, Information Security
+  and Cryptography, pages 3--37. Springer, 2010.
+
+\end{thebibliography}
